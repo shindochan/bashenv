@@ -1,0 +1,26 @@
+XTerm*ttyModes:		erase ^? kill ^U intr ^C
+XTerm*termName:		xterms
+XTerm*metaSendsEscape: true
+XTerm*reverseWrap:	on
+XTerm*loginShell:	off
+XTerm*ReverseVideo:	off
+XTerm*scrollBar:	on
+XTerm*background:	black
+XTerm*foreground:	green
+XTerm*cursorColor:	green
+XTerm*pointerColor:	green
+XTerm*pointerColorBackground:	green
+XTerm*initialFont: 6
+
+Emacs*foreground:	green
+Emacs*background:	black
+Emacs*cursorColor:	magenta
+Emacs*pointerColor:	magenta
+
+emacs*foreground:	green
+emacs*background:	black
+emacs*cursorColor:	magenta
+emacs*pointerColor:	magenta
+
+acroread*lprCommand:/usr/bin/lp -c -y duplex -y staple
+*lprCommand:/usr/bin/lp -c -y duplex -y staple

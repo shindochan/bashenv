@@ -1,0 +1,7 @@
+# backup files
+*~
+.*~
+\#*
+
+# cscope files
+cscope.*

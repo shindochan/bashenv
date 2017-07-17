@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# set up the server
+TZ=US/Pacific
+export TZ
+
+xset s default fp default	# to user preference
+xrdb -load $HOME/.Xdefaults
+xsetroot -cursor $HOME/.X/ent.xbc $HOME/.X/ent.xbcm
+
+eval `ssh-agent -s`
+xclock -update 1 -g 100x100-0+0 -fg green -bg black -hl green -hd green -norender &
+xload -g 100x100-0+126 -fg green -bg black -d $DISPLAY &
+emacs -primary -geometry 80x42+500+0 &
+xconsole -geometry 400x70+0+0&
+xterm -geometry 80x24+0-0&
+xterm -geometry 80x24+0+100 -e ssh-add &
+ctwm&
+

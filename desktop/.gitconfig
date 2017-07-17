@@ -1,0 +1,13 @@
+[core]
+	autocrlf = false
+	excludesfile = ~/.gitignore_global
+[user]
+	email = mick@z1m.net
+	name = Mick O'Halloran
+[alias]
+	root = !pwd
+	ish = !sh -c \"git rev-parse ${1:-HEAD} | cut -c 1-7\" -
+[rebase]
+	autosquash = true
+[push]
+	default = simple

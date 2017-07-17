@@ -1,0 +1,17 @@
+emacs24
+cscope
+firefox
+aspell (ispell)
+texinfo
+xorg-x11-apps
+xclip
+xorg-x11-fonts-100dpi
+xorg-x11-fonts-75dpi
+xorg-x11-server-devel
+xsel
+clang-format-3.6
+ctwm
+grabc
+org-mode
+xserver-common
+

@@ -1,0 +1,35 @@
+#! /bin/bash
+
+[ -z "$SHLVL" ] && $HOME/.profile $0
+cd $HOME
+myname=${0##*/}
+logfile=$HOME/.vnc/$myname.log
+[ -f $logfile ] && mv -f $logfile $(nextlog $logfile)
+exec >$logfile 2>&1 </dev/null
+# Make sure the display name is exportable.
+case	"$DISPLAY" in
+	?*:?*)	# O.K. as is
+		;;
+	:?*)	# Also O.K., don't mess with it.
+		;;
+	*)	# DISPLAY totally unset, fix it
+		echo $myname: Warning DISPLAY not set on entry
+		DISPLAY=:0.0
+		;;
+esac
+echo "$myname: DISPLAY = \"$DISPLAY\""
+export DISPLAY
+
+oldname=$myname
+myname=${DISPLAY}.$myname
+logfile=$HOME/.vnc/$myname.log
+echo "$oldname: switching to log file '$logfile' and sourcing $myname"
+[ -f $logfile ] && mv -f $logfile $logfile.old
+exec >$logfile 2>&1 </dev/null
+
+echo "<<<<<< dump of $myname environment >>>>>>"
+set
+echo "<<<<<< end of $myname environment dump >>>>>>"
+echo "$myname: sourcing $HOME/.vnc/$myname"
+. $HOME/.vnc/$myname
+echo "$myname: start up done!"

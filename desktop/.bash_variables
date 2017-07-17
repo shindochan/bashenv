@@ -1,0 +1,31 @@
+PS1='\u@\h:\W\$ '
+export ALLFILESEXCEPT='\.git|cscope|/build/|~$|/eclipse-bin/|\.classpath$|\.class$|/target/|\.build/|\.tar|/\.ccache/'
+
+# BASHRC_PREFIXES is a space separated list of files to source, with
+# suffixes of aliases, variables, functions and rc, in that order
+# (change in .bashrc)
+export BASHRC_PREFIXES=""
+export BINDIR=~/.bin
+export EDITOR=emacs
+export HISTCONTROL=ignoreboth #ignore dups and lines with leading spaces
+export HISTFILESIZE=20000
+export HISTSIZE=10000
+export JAVA_HOME " /System/Library/Frameworks/JavaVM.framework/Versions/Current
+export JAVACMD $JAVA_HOME/Commands/java
+export LOGDIR=~/.log
+export SRCDIR=~/.src
+export TMPDIR=~/.tmp
+export VISUAL=emacs
+# From here down, these variables should be given values in one of the ${BASHRC_REFIXES}variables file:
+export CORP_DOMAIN=
+export CR_URL=
+export DEFAULT_CONF_DIR=
+export DEFAULT_DB=
+export DEFAULT_DBDOMAIN=
+export DEFAULT_TICKET_PREFIX=
+export GIT_CLONE_PREFIX=
+export GIT_VPS_SCP_PATH=
+export ISSUE_URL=
+export TICKET_URL=
+export VPSNAMEFILE=
+
