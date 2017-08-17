@@ -36,16 +36,17 @@ allcalls()
 
 appendExistingPath()
 {
-    dirlist="$1";
-    shift;
+    dirlist=
     for dir in "$@";
     do
-	if   [[ -d "$dir" ]]
-	then dirlist="$dirlist $dir";
-	fi
+        if   [[ -d "$dir" ]]
+        then dirlist="$dirlist $dir";
+        fi
     done;
-    set $dirlist;
-    appendPath "$@"
+    if [[ -n ${dirlist## } ]]
+    then set $dirlist;
+         appendPath "$@"
+    fi
 }
 
 appendPath ()
@@ -199,10 +200,11 @@ dumpFunctions ()
 
 dumpVariables ()
 {
-    for v in "$@"
-    do
-        echo export $v=\'$(eval "echo \$$v")\'
-    done
+    OLDIFS="$IFS";
+    export IFS="|";
+    args="$*";
+    export IFS="$OLDIFS";
+    set | egrep "^($args)[^=]*="| sed -e 's/^/export /' -e "s/=/='/" -e "s/$/'/"
 }
 
 ediff ()
