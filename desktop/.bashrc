@@ -45,7 +45,7 @@ case $- in
 esac
 
 shopt -s checkwinsize # Update LINES and COLUMNS after each command
-shopt -s globstar # ** matches across dir levels
+#shopt -s globstar # ** matches across dir levels
 shopt -s histappend
 
 # enable programmable completion features (you don't need to enable
