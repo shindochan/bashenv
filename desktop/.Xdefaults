@@ -1,6 +1,7 @@
 XTerm*ttyModes:		erase ^? kill ^U intr ^C
 XTerm*termName:		xterms
 XTerm*metaSendsEscape: true
+XTerm*altSendsEscape: true
 XTerm*reverseWrap:	on
 XTerm*loginShell:	off
 XTerm*ReverseVideo:	off

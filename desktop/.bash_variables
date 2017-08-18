@@ -1,4 +1,3 @@
-PS1='\u@\h:\W\$ '
 export ALLFILESEXCEPT='\.git|cscope|/build/|~$|/eclipse-bin/|\.classpath$|\.class$|/target/|\.build/|\.tar|/\.ccache/'
 
 # BASHRC_PREFIXES is a space separated list of files to source, with
@@ -28,4 +27,3 @@ export GIT_VPS_SCP_PATH=
 export ISSUE_URL=
 export TICKET_URL=
 export VPSNAMEFILE=
-

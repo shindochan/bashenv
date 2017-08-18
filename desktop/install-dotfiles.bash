@@ -25,3 +25,10 @@ then echo 1>&2 ${0##*/}: Missing $desktopdir/Manifest, nothing installed
 fi
 
 tar cf - $(cat Manifest) | (cd ~; tar xf -)
+git config --global user.name "$(id -F)"
+MAILADDR="$(domainname)"
+if   [[ -z "$MAILADDR" ]]
+then MAILADDR="$(uname -n)"
+fi
+MAILADDR="$(id -u -n)@$MAILADDR"
+git config --global user.email "$MAILADDR"

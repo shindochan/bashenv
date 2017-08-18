@@ -1,47 +1,51 @@
 #! /bin/bash
 BASHRC_SUFFIXES="aliases variables functions rc"
-LOGFILE=~/.bashrc.log
 _log()
 {
-    echo ".bashrc($$)@$(date +%FT%T.%N): $*" >>$LOGFILE
+   LOGFILE=~/.bash.log
+   echo ".bashrc($$)@$(date +%FT%T.%N): $*" >>$LOGFILE
 }
 _log
 _log entry
 
 if   [[ -z "$LoggedIn" ]]
 then _log LoggedIn Not set, running .bash_profile
-     source ~/.bash_profile
-     _log Done sourcing ~/.bash_profile
-     return
+    source ~/.bash_profile
+    _log Done sourcing ~/.bash_profile
+    return
 fi
+_log "LoggedIn='$LoggedIn'"
 
 # NOTE: must be idempotent below this point.
 for suffix in $BASHRC_SUFFIXES
 do file=~/.bash_$suffix
-   if [[ -f $file ]]
-   then _log loading "'$file'"
+  if [[ -f $file ]]
+  then _log loading "'$file'"
 	source $file
-   fi
+  fi
 done
 
 if [[ -n $BASHRC_PREFIXES ]]
 then for prefix in $BASHRC_PREFIXES
-     do for suffix in $BASHRC_SUFFIXES
-        do file=$prefix$suffix
+    do for suffix in $BASHRC_SUFFIXES
+       do file=$prefix$suffix
 	   if [[ -f $file ]]
 	   then _log loading "'$file'"
 	        source $file
 	   fi
-        done
-     done
+       done
+    done
 fi
 
+# User specific environment and startup programs
+appendPath /usr/local/bin /sbin /usr/sbin
+_log final PATH="'$PATH'"
 # If not running interactively, don't do anything, Useful example, not
 # sure this is the right thing to do, so commented out.
 case $- in
-    *i*) _log is interactive;;
-      *) # return;;
-         _log is NOT interactive;;
+   *i*) _log is interactive;;
+     *) # return;;
+        _log is NOT interactive;;
 esac
 
 shopt -s checkwinsize # Update LINES and COLUMNS after each command
@@ -52,11 +56,11 @@ shopt -s histappend
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+ if [ -f /usr/share/bash-completion/bash_completion ]; then
+   . /usr/share/bash-completion/bash_completion
+ elif [ -f /etc/bash_completion ]; then
+   . /etc/bash_completion
+ fi
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1) and lessfile(1)
@@ -64,16 +68,25 @@ fi
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 # [ -x /usr/bin/lessfile ] && eval "$(SHELL=/bin/sh lessfile)"
 
-PS1='\u@\h:\w\$ '
+export PS1='\u@\h:\w\$ '
 
+_log "first set PS1='$PS1'"
+
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=true
+export PS1="${PS1%%\\\$ }"'$(__git_ps1 " (%s)")\$ '
+_log "add git to PS1=$PS1"
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
-    ;;
+   export PS1="\[\e]0;${PS1%%\\\$ }\a\]$PS1"
+   ;;
 *)
-    ;;
+   ;;
 esac
+
+_log "final PS1='$PS1'"
 _log "PS1='$PS1'"
 _log Done
 _log

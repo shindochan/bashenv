@@ -238,13 +238,13 @@
 ;       ))
     (setq initial-frame-alist
       '((reverse . t)
-	(top . 0) (left . 420) (width . 88) (height . 37)
+	(top . 0) (left . 757) (width . 80) (height . 47)
 ;	(minibuffer . nil)
        ))
 ;	(font . "-schumacher-clean-medium-r-normal--*-140-*-*-c-*-*-1")
     (setq default-frame-alist
       '(;(reverse . t) 
-	(width . 80) (height . 25)
+	(width . 80) (height . 47)
 ;	(minibuffer . nil)
 ;	(font . "-schumacher-clean-medium-r-normal--*-140-*-*-c-*-*-1")
 	))
@@ -414,10 +414,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-;; START inserted by setup-dev.sh
 (setq-default indent-tabs-mode nil)
 (setq-default c-basic-offset 4)
 (setq-default show-trailing-whitespace t)
-;; END inserted by setup-dev.sh
 (add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
 (load "jde")
