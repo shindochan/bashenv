@@ -39,6 +39,7 @@ fi
 
 # User specific environment and startup programs
 appendPath /usr/local/bin /sbin /usr/sbin
+[[ -n $BINDIR ]] && prependPath $BINDIR
 _log final PATH="'$PATH'"
 # If not running interactively, don't do anything, Useful example, not
 # sure this is the right thing to do, so commented out.
@@ -87,6 +88,5 @@ xterm*|rxvt*)
 esac
 
 _log "final PS1='$PS1'"
-_log "PS1='$PS1'"
 _log Done
 _log

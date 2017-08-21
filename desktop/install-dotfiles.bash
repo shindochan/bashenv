@@ -25,10 +25,17 @@ then echo 1>&2 ${0##*/}: Missing $desktopdir/Manifest, nothing installed
 fi
 
 tar cf - $(cat Manifest) | (cd ~; tar xf -)
-git config --global user.name "$(id -F)"
+FULLNAME="$(id -F)"
+git config --global user.name "$FULLNAME"
 MAILADDR="$(domainname)"
 if   [[ -z "$MAILADDR" ]]
 then MAILADDR="$(uname -n)"
 fi
 MAILADDR="$(id -u -n)@$MAILADDR"
 git config --global user.email "$MAILADDR"
+echo "git user name \"$FULLNAME\""
+echo "git email \"$MAILADDR\""
+
+if   [[ $(uname -s) = Darwin ]]
+then sed -i .original -e '/# OSX Only/s/^\([ 	]*\)#/\1/'  ~/.ssh/config
+fi
