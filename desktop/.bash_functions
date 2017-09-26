@@ -890,3 +890,7 @@ bff ()
 { 
     egrep "^[^ ]* *\(\) *$" "$@"
 }
+gittag2commit () 
+{ 
+    git show --format=format:"commit %H (%D)" "$@" | grep '^commit'
+}
