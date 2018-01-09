@@ -64,6 +64,11 @@ if ! shopt -oq posix; then
  fi
 fi
 
+appendExistingPath $GCLOUD_SDK/bin
+if   [[ -f $GCLOUD_SDK/completion.bash.inc ]]
+then source $GCLOUD_SDK/completion.bash.inc
+fi
+
 # make less more friendly for non-text input files, see lesspipe(1) and lessfile(1)
 # Choose one--pipe is faster to start but can't display percentages
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
