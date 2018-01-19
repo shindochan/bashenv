@@ -39,6 +39,7 @@ fi
 
 # User specific environment and startup programs
 appendPath /usr/local/bin /sbin /usr/sbin
+[[ -n $BINDIR ]] && prependPath $BINDIR
 _log final PATH="'$PATH'"
 # If not running interactively, don't do anything, Useful example, not
 # sure this is the right thing to do, so commented out.
@@ -61,6 +62,11 @@ if ! shopt -oq posix; then
  elif [ -f /etc/bash_completion ]; then
    . /etc/bash_completion
  fi
+fi
+
+appendExistingPath $GCLOUD_SDK/bin
+if   [[ -f $GCLOUD_SDK/completion.bash.inc ]]
+then source $GCLOUD_SDK/completion.bash.inc
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1) and lessfile(1)
@@ -87,6 +93,5 @@ xterm*|rxvt*)
 esac
 
 _log "final PS1='$PS1'"
-_log "PS1='$PS1'"
 _log Done
 _log

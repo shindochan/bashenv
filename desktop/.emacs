@@ -1,3 +1,8 @@
+(require 'package)
+;; (add-to-list 'package-archives
+;;              '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
 (require 'python)
 
 (global-set-key [?\A-+] #'text-scale-increase)
@@ -15,10 +20,11 @@
 (setq load-path
       (cons (expand-file-name "~/.lib/gnu/emacs")
 	    (cons (expand-file-name "/usr/share/emacs/24.3/lisp/obsolete") load-path)))
+(add-to-list 'load-path (expand-file-name "~/github/rust-mode"))
+
 (setq auto-mode-alist (cons (cons "\\.otl\\'" 'outline-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.n\\'" 'nroff-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.t\\'" 'nroff-mode) auto-mode-alist))
-
 (setq auto-mode-alist (cons (cons "\\.sh\\'" 'perl-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.tex\\'" 'tex-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.w\\'" 'c++-mode) auto-mode-alist))
@@ -26,6 +32,7 @@
 (setq auto-mode-alist (cons (cons "\\.s\\'" 'lisp-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "TODO\\'" 'org-mode) auto-mode-alist))
 (setq auto-mode-alist (cons (cons "\\.pyx\\'" 'python-mode) auto-mode-alist))
+(setq auto-mode-alist (cons (cons "\\.rs\\'" 'rust-mode) auto-mode-alist))
 (setq command-switch-alist (cons (cons "-cscope" 'cscope-switch)
 				 command-switch-alist))
 (setq command-switch-alist (cons (cons "-ccsput" 'ccsput-switch)
@@ -76,6 +83,7 @@
 (autoload 'crash-switch "crash" "CRASH mode, based on gud" t)
 (autoload 'cweb-mode "cweb-mode" "web mode, C++ and LaTex" t)
 (autoload 'web-c++-mode "web-c++-mode" nil t)
+(autoload 'rust-mode "rust-mode" nil t)
 
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)

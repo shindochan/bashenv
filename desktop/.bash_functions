@@ -890,3 +890,17 @@ bff ()
 { 
     egrep "^[^ ]* *\(\) *$" "$@"
 }
+gittag2commit () 
+{ 
+    git show --format=format:"commit %H (%D)" "$@" | grep '^commit'
+}
+ghc () 
+{ 
+    ( cd ~/github;
+    group=$1 project=$2;
+    if [[ ! -d $group ]]; then
+        mkdir $group;
+    fi;
+    cd $group;
+    git clone git@github.com:$group/$project.git )
+}
