@@ -190,6 +190,15 @@ diffToFiles()
     grep '^diff' | sed -e 's,^.*git a/,,' -e 's, b/.*$,,'
 }
 
+dkh ()
+{
+    (for i in $*;
+     do  echo $i;
+    done | sort -nru | sed -e 's/$/d/';
+    echo w;
+    echo q ) | ed ~/.ssh/known_hosts
+}
+
 dumpFunctions ()
 {
     for f in $(functions "$@"|sed -e 's/()//g');
@@ -863,39 +872,39 @@ wlogs ()
         yarn logs --applicationId $(getApplicationId "$file");
     done
 }
-hki () 
-{ 
+hki ()
+{
     USER=$(id -nu);
     KEYTAB=/etc/hadoop/conf/$USER.keytab;
     PRINCIPAL=$(klist -k $KEYTAB | fgrep $USER | sed -e 's/^.* //' -e '$!d');
     kinit -k -t $KEYTAB $PRINCIPAL
 }
-finderShowHiddenFiles () 
-{ 
+finderShowHiddenFiles ()
+{
     defaults write com.apple.finder AppleShowAllFiles TRUE
 }
-gitfixup () 
-{ 
+gitfixup ()
+{
     git commit -a --fixup=$(git rev-parse HEAD);
 }
 gitpwb ()
 {
     git branch | sed -e '/^\* /!d' -e 's///';
 }
-pff () 
-{ 
+pff ()
+{
     egrep --color=auto "^[ 	]*def[ 	]+[a-zA-Z0-9_]+\(" "$@"
 }
-bff () 
-{ 
+bff ()
+{
     egrep "^[^ ]* *\(\) *$" "$@"
 }
-gittag2commit () 
-{ 
+gittag2commit ()
+{
     git show --format=format:"commit %H (%D)" "$@" | grep '^commit'
 }
-ghc () 
-{ 
+ghc ()
+{
     ( cd ~/github;
     group=$1 project=$2;
     if [[ ! -d $group ]]; then

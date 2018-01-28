@@ -55,13 +55,22 @@ then	SUFFIX=sh
 else	SUFFIX=csh
 fi
 
+Usage() {
+    echo "$USAGE" 1>&2
+    exit ${1-1}
+}
+
+Help() {
+    echo "$HELP" 1>&2
+    exit ${1-1}
+}
+
 # process options
 while getopts cs opt
 do	case $opt in
 	c)	SUFFIX=csh ;;
 	s)	SUFFIX=sh ;;
-	\?)	echo "$HELP" 1>&2
-		exit 1;;
+	\?)	Help;;
 	esac
 done
 shift $((OPTIND - 1))
@@ -77,6 +86,12 @@ case	$# in
 2)	VERSION=$2
 	SYSTEM=${1%%/}
 	;;
-*)	echo 1>&2 "$USAGE"
-	exit 2 ;;
+*)	Usage 2;;
 esac
+
+doOp() {
+    if   "$@"
+    then echo "Successfully completed '$*'"
+    else echo "FAILED: '$*'"
+    fi
+}
