@@ -95,3 +95,25 @@ doOp() {
     else echo "FAILED: '$*'"
     fi
 }
+donedir=$HOME/.$prog.done
+doDependentOp() {
+    # First arg is a list of files that must be older than the done
+    # done file
+    dependencies=$1
+    shift
+    donefile=$donedir/.$(echo "$*"|tr " /" "_%")
+    for dependency in $dependencies
+    do  if [[ $donefile -nt $dependency ]]
+        then :               # no need to execute
+        else # execute and cut the loop short
+             if   "$@"
+             then echo "Successfully completed '$*'"
+                  touch $donefile
+                  return 0
+             else echo "FAILED: '$*'"
+                  return 1
+             fi
+        fi
+    done
+    echo "Not Needed, not executed: '$*'"
+}
