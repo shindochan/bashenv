@@ -1,9 +1,13 @@
 (require 'package)
 ;; (add-to-list 'package-archives
 ;;              '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+
 (package-initialize)
 
 (require 'python)
+(require 'go-mode)
 
 (global-set-key [?\A-+] #'text-scale-increase)
 (global-set-key [?\A--] #'text-scale-decrease)
