@@ -117,3 +117,11 @@ doDependentOp() {
     done
     echo "Not Needed, not executed: '$*'"
 }
+
+countlines() {
+    # because 'echo "$var"|wc -l' counts zero lines as one
+    if   [[ -z "$*" ]]
+    then echo 0
+    else echo "$*" | wc -l
+    fi
+}
