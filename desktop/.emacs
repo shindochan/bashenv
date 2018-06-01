@@ -7,7 +7,7 @@
 (package-initialize)
 
 (require 'python)
-(require 'go-mode)
+;; 1(require 'go-mode)
 
 (global-set-key [?\A-+] #'text-scale-increase)
 (global-set-key [?\A--] #'text-scale-decrease)

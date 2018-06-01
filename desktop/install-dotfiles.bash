@@ -25,6 +25,10 @@ then echo 1>&2 ${0##*/}: Missing $desktopdir/Manifest, nothing installed
 fi
 
 tar cf - $(cat Manifest) | (cd ~; tar xf -)
+
+echo installing Xcode command line tools
+xcode-select --install
+
 FULLNAME="$(id -F)"
 git config --global user.name "$FULLNAME"
 MAILADDR="$(domainname)"
@@ -38,4 +42,18 @@ echo "git email \"$MAILADDR\""
 
 if   [[ $(uname -s) = Darwin ]]
 then sed -i .original -e '/# OSX Only/s/^\([ 	]*\)#/\1/'  ~/.ssh/config
+     echo "Enabling locate db, requires login password"
+     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 fi
+
+cat <<EOF
+install 1Password
+install clamXav
+install bettertouchtool
+install SteelSeriesEngine3
+install XQuartz
+install emacs
+ghc homebrew install
+scan ~/github/homebrew/install
+~/github/homebrew/install/install
+EOF
