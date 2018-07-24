@@ -914,3 +914,32 @@ ghc ()
     git clone git@github.com:$group/$project.git )
 }
 
+tablecols ()
+{
+    TABLE=$1
+    shift
+    a=$(cat $*|cut -f 1| grep -ni "^[^       ]*$1" | sed -e 's/:.*$//')
+    echo $a
+}
+diffcol ()
+{
+    tmp=${TMPDIR:=/tmp}/diffcol.$$;
+    tmpa=$tmp.a;
+    tmpb=$tmp.b;
+    trap "rm -f $tmpa $tmps" 0 1 2 3 15
+    cut -f $1 $2 > $tmpa;
+    cut -f $1 $3 > $tmpb;
+    diff $tmpa $tmpb | less;
+    rm $tmpa $tmpb
+}
+diffrow ()
+{
+    tmp=${TMPDIR:=/tmp}/diffcol.$$;
+    tmpa=$tmp.a;
+    tmpb=$tmp.b;
+    trap "rm -f $tmpa $tmps" 0 1 2 3 15
+    sed -e "$1"'!d' $2 | tr '\t' '\n' >$tmpa
+    sed -e "$1"'!d' $3 | tr '\t' '\n'  >$tmpb
+    diff $tmpa $tmpb | less;
+    rm $tmpa $tmpb
+}
