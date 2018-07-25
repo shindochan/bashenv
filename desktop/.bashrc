@@ -69,6 +69,9 @@ if   [[ -f $GCLOUD_SDK/completion.bash.inc ]]
 then source $GCLOUD_SDK/completion.bash.inc
 fi
 
+appendExistingPath "$HOME/.cargo/bin"
+
+
 # make less more friendly for non-text input files, see lesspipe(1) and lessfile(1)
 # Choose one--pipe is faster to start but can't display percentages
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -78,7 +81,7 @@ export PS1='\u@\h:\w\$ '
 
 _log "first set PS1='$PS1'"
 
-if   [[ -f source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]]
+if   [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]]
 then source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
 elif [[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ]]
 then echo "Install XCode. Using CommandLineTools for git-completion.bash"
