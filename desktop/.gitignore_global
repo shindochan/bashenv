@@ -6,3 +6,4 @@
 # cscope files
 cscope.*
 .DS_Store
+.pytest_cache
