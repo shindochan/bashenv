@@ -81,23 +81,23 @@ export PS1='\u@\h:\w\$ '
 
 _log "first set PS1='$PS1'"
 
-if   [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]]
-then source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
-elif [[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ]]
-then echo "Install XCode. Using CommandLineTools for git-completion.bash"
-     source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
-elif [[ $(uname -s) == "Darwin" ]]
-then echo "git-completion.bash not found, install XCode."
-fi
-
-if   [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh ]]
-then source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
-elif [[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]]
-then echo "Pleease Install XCode, using CommandLineTOolsfor git-prompt.sh"
-     source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
-elif [[ $(uname -s) == "Darwin" ]]
-then echo "git-prompt.sh not found, please install XCodee."
-fi
+# if   [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]]
+# then source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+# elif [[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ]]
+# then echo "Install XCode. Using CommandLineTools for git-completion.bash"
+#      source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+# elif [[ $(uname -s) == "Darwin" ]]
+# then echo "git-completion.bash not found, install XCode."
+# fi
+# 
+# if   [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh ]]
+# then source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+# elif [[ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]]
+# then echo "Pleease Install XCode, using CommandLineTOolsfor git-prompt.sh"
+#      source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
+# elif [[ $(uname -s) == "Darwin" ]]
+# then echo "git-prompt.sh not found, please install XCodee."
+# fi
 
 export GIT_PS1_SHOWDIRTYSTATE=true
 export PS1="${PS1%%\\\$ }"'$(__git_ps1 " (%s)")\$ '

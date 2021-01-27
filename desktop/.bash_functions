@@ -905,14 +905,15 @@ gittag2commit ()
 }
 ghc ()
 {
-    GITHUB=${GITHUB:=$HOME/gitbub}
+    GITHUB=${GITHUB:=$HOME/.src/github}
     group=$1 project=$2;
-    SRCDIR=$GITHUB/$group/$project
+    SRC=$GITHUB/$group
     if [[ ! -d $SRC ]]; then
         mkdir -p $SRC;
     fi;
     ( cd $SRC
-      git clone git@github.com:$group/$project.git )
+#      git clone git@github.com:$group/$project.git )
+      git clone https://github.com/$group/$project.git )
 }
 
 tablecols ()
