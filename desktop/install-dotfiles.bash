@@ -46,14 +46,17 @@ then sed -i .original -e '/# OSX Only/s/^\([ 	]*\)#/\1/'  ~/.ssh/config
      sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 fi
 
+ghc homebrew install
+~/.src/github/homebrew/install/install
+brew install cask clamxav
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --no-quarantine
 cat <<EOF
 install 1Password
-install clamXav
+license clamXAV
+scan ~/.src/github/homebrew/install
 install bettertouchtool
-install SteelSeriesEngine3
-install XQuartz
+Install Logitech Gaming Software
 install emacs
-ghc homebrew install
-scan ~/github/homebrew/install
-~/github/homebrew/install/install
+install iterm2
 EOF
