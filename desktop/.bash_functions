@@ -945,3 +945,21 @@ diffrow ()
     diff $tmpa $tmpb | less;
     rm $tmpa $tmpb
 }
+
+gitbrowse ()
+{
+    giturl=$(fgrep url $(git root)/.git/config);
+    giturl=${giturl##*= };
+    if [[ "$giturl" != "${giturl##git@}" ]]; then
+        giturl=${giturl##git@};
+        githost=${giturl%%:*};
+        gituri=${giturl##*:};
+        giturl=https://$githost/$gituri;
+    fi;
+    open $giturl
+}
+
+venv() {
+    python3 -m venv "$@"
+}
+
