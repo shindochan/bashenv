@@ -934,7 +934,7 @@ diffcol ()
     diff $tmpa $tmpb | less;
     rm $tmpa $tmpb
 }
-diffrow ()
+diffrow()
 {
     tmp=${TMPDIR:=/tmp}/diffcol.$$;
     tmpa=$tmp.a;
@@ -944,4 +944,80 @@ diffrow ()
     sed -e "$1"'!d' $3 | tr '\t' '\n'  >$tmpb
     diff $tmpa $tmpb | less;
     rm $tmpa $tmpb
+}
+
+csvcols()
+{
+    head -1 "$1" | tr , '\n' | cat -n
+}
+
+tsvcols()
+{
+    head -1 "$1" | tr '\t' '\n' | cat -n
+}
+
+isodate()
+{
+    date "+%FT%T %Z"
+}
+
+tsvcell()
+{
+    col="$1";
+    row="$2";
+    file="$3";
+    cut -f"$col" "$file" | sed -e "$row"'!d'
+}
+tsvsymcell()
+{
+    colname="$1";
+    row="$2";
+    file="$3";
+    colnum=$(tsvcols "$file" | grep "\t${colname}$" | cut -f1);
+    tsvcell $colnum "$row" "$file"
+}
+
+chazDateToIso()
+{
+    date -j -f "%d %b %Y %T" "+%FT%T" "$1"
+}
+
+ESDPromptOne() {
+    echo "$1"
+    value=$(tsvsymcell "$1" "$2" "$3")
+    echo -n "$value" | pbcopy
+    echo "$value"
+    read nothing
+}
+
+ESDprompt()
+{
+    # Takes a line number and an ESD tsv file and displays the  info in a
+    # friendly way for making the weekly ESD reports.
+    line="$1"
+    file="$2"
+    ESDPromptOne "Contact Date" "$line" "$file"
+    echo "Worksource no"
+    read nothing
+    ESDPromptOne "Company" "$line" "$file"
+    ESDPromptOne "Position" "$line" "$file"
+    ESDPromptOne "Kind" "$line" "$file"
+    ESDPromptOne "Who Contacted" "$line" "$file"
+    ESDPromptOne "Contact Address" "$line" "$file"
+}
+
+ESDweekly() {
+    if   [[ -n "$1" ]]
+    then we="$1"
+    else dayofweek=$(date +%u)
+         ((days = (dayofweek + 1) % 7))
+         we=$(date -v -${days}d +%F)
+    fi
+    if   [[ -z $ESDTSV ]]
+    then export ESDTSV="$HOME//Library/Mobile Documents/com~apple~CloudDocs/JobSearch$(date +%Y)/JobSearch$(date +%Y)ESD.tsv"
+    fi
+
+    for i in $(cut -f 8 "$ESDTSV" | cat -n|fgrep $we | cut -f1)
+    do ESDprompt $i "$ESDTSV"
+    done
 }

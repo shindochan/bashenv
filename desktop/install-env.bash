@@ -26,19 +26,6 @@ fi
 
 tar cf - $(cat Manifest) | (cd ~; tar xf -)
 
-echo installing Xcode command line tools
-xcode-select --install
-
-FULLNAME="$(id -F)"
-git config --global user.name "$FULLNAME"
-MAILADDR="$(domainname)"
-if   [[ -z "$MAILADDR" ]]
-then MAILADDR="$(uname -n)"
-fi
-MAILADDR="$(id -u -n)@$MAILADDR"
-git config --global user.email "$MAILADDR"
-echo "git user name \"$FULLNAME\""
-echo "git email \"$MAILADDR\""
 
 if   [[ $(uname -s) = Darwin ]]
 then sed -i .original -e '/# OSX Only/s/^\([ 	]*\)#/\1/'  ~/.ssh/config
@@ -46,17 +33,68 @@ then sed -i .original -e '/# OSX Only/s/^\([ 	]*\)#/\1/'  ~/.ssh/config
      sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 fi
 
+ghc ()
+{
+    GITHUB=${GITHUB:=$HOME/.src/github}
+    group=$1 project=$2;
+    SRC=$GITHUB/$group
+    if [[ ! -d $SRC ]]; then
+        mkdir -p $SRC;
+    fi;
+    ( cd $SRC
+      git clone git@github.com:$group/$project.git )
+}
+
+export GITHOMEBREW=$GITHUB/homebrew
 ghc homebrew install
-~/.src/github/homebrew/install/install
-brew install cask clamxav
+$GITHOMEBREW/install/install.sh
+brew install cask clamav
+
+cat <<\EOF
+cp clamd.conf.sample clamd.conf
+ed clamd.conf <<xyz
+85c
+DatabaseDirectory /var/lib/clamav
+.
+7,8d
+w
+q
+xyz
+cp freshclam.conf.sample freshclam.conf
+ed fleshclam.conf <<xyz
+13c
+DatabaseDirectory /var/lib/clamav
+.
+7,8d
+w
+q
+xyz
+
+mkdir /var/lib/clamav
+chown appropriately
+
+freshclam
+Clamscan ~/.src/github/homebrew/install
+Also scan iterm
+
+git config --global user.name "Full X. Name"
+git config --global user.email "user@domain.tld"
+
+
 brew tap railwaycat/emacsmacport
 brew install emacs-mac --no-quarantine
-cat <<EOF
 install 1Password
-license clamXAV
 scan ~/.src/github/homebrew/install
 install bettertouchtool
 Install Logitech Gaming Software
 install emacs
-install iterm2
+install iterm2: https://iterm2.com
+
+finderShowHiddenFiles
+
+Need to collect changes from Notes
+Need to look at .bashrc for the homebrew changes: need append path functions for manpath and infopath!!
+Need to understand what this construct does: export PATH="/usr/local/bin:/usr/local/sbin${PATH+:$PATH}";
+Need to push git changes.
+
 EOF
